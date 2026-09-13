@@ -20,20 +20,22 @@ def LyapunovLogistico( X, a, fPrimeMinimo=1e-10 ):
 #
 
 def FazFiguraDiagramaBifurcacao( As, X, L, \
-                        figsize=(9,4.1), alpha=0.1, ylimL=[-5, 1] ):
-    plt.figure(figsize=figsize)
-    ax = plt.subplot(3,1,(1,2))
-    plt.subplots_adjust(hspace=0.0)
-    plt.plot( As, X.T, ',k', alpha=alpha )
-    plt.xlabel( 'a' )
-    plt.ylabel( 'x' )
-    ax2 = plt.subplot(3,1,3)
-    ax2.sharex(ax)
-    plt.plot( As, 0*As, '-r', lw=0.5 )
-    plt.plot( As, L, ',b' )
-    plt.xlabel( 'a' )
-    plt.ylabel( 'L' )
-    plt.xlim([min(As), max(As)])
-    plt.ylim(ylimL)
+              figsize=(9,4.1), alpha=0.1, ylimL=[-5, 1],
+              SHOW=True ):
+  plt.figure(figsize=figsize)
+  ax = plt.subplot(3,1,(1,2))
+  plt.subplots_adjust(hspace=0.0)
+  plt.plot( As, X.T, ',k', alpha=alpha )
+  plt.xlabel( 'a' )
+  plt.ylabel( 'x' )
+  ax2 = plt.subplot(3,1,3)
+  ax2.sharex(ax)
+  plt.plot( As, 0*As, '-r', lw=0.5 )
+  plt.plot( As, L, ',b' )
+  plt.xlabel( 'a' )
+  plt.ylabel( 'L' )
+  plt.xlim([min(As), max(As)])
+  plt.ylim(ylimL)
+  if SHOW:
     plt.show()
 #
