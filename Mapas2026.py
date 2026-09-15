@@ -23,9 +23,10 @@ def FazFiguraDiagramaBifurcacao( As, X, L, \
               figsize = None, alpha = 0.1, ylimL = None,
               SHOW = True, DEVOLVE_fig_axs = False ):
   if figsize is not None:
-    plt.figure(figsize=figsize)
+    fig = plt.figure(figsize=figsize)
   else:
-    plt.figure()
+    fig = plt.figure()
+  axs = []
   axs.append( plt.subplot(3,1,(1,2)) )
   plt.subplots_adjust(hspace=0.0)
   plt.plot( As, X.T, ',k', alpha=alpha )
