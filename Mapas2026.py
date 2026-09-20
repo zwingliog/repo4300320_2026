@@ -21,31 +21,43 @@ def LyapunovLogistico( X, a, fPrimeMinimo=1e-10 ):
 
 def FazFiguraDiagramaBifurcacao( As, X, L, \
               figsize = None, alpha = 0.1, ylimL = None,
-              SHOW = True, DEVOLVE_fig_axs = False ):
-  if figsize is not None:
-    fig = plt.figure(figsize=figsize)
-  else:
-    fig = plt.figure()
-  axs = []
-  axs.append( plt.subplot(3,1,(1,2)) )
-  plt.subplots_adjust(hspace=0.0)
-  plt.plot( As, X.T, ',k', alpha=alpha )
-  plt.xlabel( 'a' )
-  plt.ylabel( 'x' )
-  axs.append( plt.subplot(3,1,3) )
-  axs[1].sharex(axs[0])
-  plt.plot( As, 0*As, '-r', lw=0.5 )
-  plt.plot( As, L, ',b' )
-  plt.xlabel( 'a' )
-  plt.ylabel( 'L' )
-  plt.xlim([min(As), max(As)])
+              SHOW = True, DEVOLVE_fig_axs = False, \
+              fig = None, axs=None ):
+  if fig is None:
+    if figsize is not None:
+      fig = plt.figure(figsize=figsize)
+    else:
+      fig = plt.figure()
+
+  if axs is None:
+    axs = []
+    axs.append( plt.subplot(3,1,(1,2)) )
+    axs.append( plt.subplot(3,1,3) )
+    plt.subplots_adjust(hspace=0.0)
+    axs[1].sharex(axs[0])
+    axs[1].set_xlim([min(As), max(As)])
+
+  # separar entre periódico e caótico
+  #axs[0].plot( As, X.T, ',k', alpha=alpha )
+  ondePeriodico = np.nonzero( L<=0 )[0]
+  ondeCaotico = np.nonzero( L>0 )[0]
+  axs[0].plot( As[ondePeriodico], X[:,ondePeriodico].T, ',k', alpha=1 )
+  axs[0].plot( As[ondeCaotico], X[:,ondeCaotico].T, ',k', alpha=alpha )
+
+  axs[0].set_xlabel( 'a' )
+  axs[0].set_ylabel( 'x' )
+  axs[1].plot( As, 0*As, '-r', lw=0.5 )
+  axs[1].plot( As, L, ',b' )
+  axs[1].set_xlabel( 'a' )
+  axs[1].set_ylabel( 'L' )
   if ylimL is not None:
-    plt.ylim(ylimL)
+    axs[1].set_ylim(ylimL)
   if SHOW:
     plt.show()
   if DEVOLVE_fig_axs:
     return fig, axs
 #
+
 
 def contadorPeriodo( X, delta=1e-5, pMax=np.inf, nVerMin=0 ):
   if X.ndim==1:
