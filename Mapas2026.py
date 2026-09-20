@@ -20,7 +20,8 @@ def LyapunovLogistico( X, a, fPrimeMinimo=1e-10 ):
 #
 
 def FazFiguraDiagramaBifurcacao( As, X, L, \
-              figsize = None, alpha = 0.1, ylimL = None,
+              figsize = None, alpha = 0.1, ylimL = None, \
+              corL = 'b', corX = 'k', \
               SHOW = True, DEVOLVE_fig_axs = False, \
               fig = None, axs=None ):
   if fig is None:
@@ -36,18 +37,18 @@ def FazFiguraDiagramaBifurcacao( As, X, L, \
     plt.subplots_adjust(hspace=0.0)
     axs[1].sharex(axs[0])
     axs[1].set_xlim([min(As), max(As)])
+    axs[1].axhline( 0, c='k', lw=0.5 )
 
   # separar entre periódico e caótico
   #axs[0].plot( As, X.T, ',k', alpha=alpha )
   ondePeriodico = np.nonzero( L<=0 )[0]
   ondeCaotico = np.nonzero( L>0 )[0]
-  axs[0].plot( As[ondePeriodico], X[:,ondePeriodico].T, ',k', alpha=1 )
-  axs[0].plot( As[ondeCaotico], X[:,ondeCaotico].T, ',k', alpha=alpha )
+  axs[0].plot( As[ondePeriodico], X[:,ondePeriodico].T, ',', c=corX, alpha=1 )
+  axs[0].plot( As[ondeCaotico], X[:,ondeCaotico].T, ',', c=corX, alpha=alpha )
 
   axs[0].set_xlabel( 'a' )
   axs[0].set_ylabel( 'x' )
-  axs[1].plot( As, 0*As, '-r', lw=0.5 )
-  axs[1].plot( As, L, ',b' )
+  axs[1].plot( As, L, ',', c=corL )
   axs[1].set_xlabel( 'a' )
   axs[1].set_ylabel( 'L' )
   if ylimL is not None:
