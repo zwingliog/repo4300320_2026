@@ -46,3 +46,22 @@ def FazFiguraDiagramaBifurcacao( As, X, L, \
   if DEVOLVE_fig_axs:
     return fig, axs
 #
+
+def contadorPeriodo( X, delta=1e-5, pMax=np.inf, nVerMin=0 ):
+  if X.ndim==1:
+    X = np.atleast_2d(X).T
+  Ps = []
+  for x in X.T:
+    repetidos = np.nonzero( abs(x-x[0])<delta )[0]
+    p = 0
+    if len(repetidos)>1: # o x contem o x[0]
+      pi = np.diff(repetidos)
+      if ( max(pi)==min(pi) ) and ( pi[0]<=np.min((pMax,(len(x)-nVerMin))) ):
+        p = pi[0]
+        for i in range(p):
+          if max( abs(x[i::p]-x[i]) )>delta:
+            p = 0
+            break
+    Ps.append( p )
+  return np.asarray(Ps)
+#
