@@ -1,6 +1,6 @@
 import numpy as np
 import matplotlib.pyplot as plt
-from repo4300320_2026/Mapas1D import contadorPeriodo
+from repo4300320_2026.Mapas2026 import contadorPeriodo
 
 def mapas1D(x0, a, funMapa=lambda x,a:a*x*(1-x), n=1, nT=0):
   x = x0
