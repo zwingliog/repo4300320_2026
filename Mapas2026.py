@@ -41,8 +41,9 @@ def FazFiguraDiagramaBifurcacao( As, X, L, \
 
   # separar entre periódico e caótico
   #axs[0].plot( As, X.T, ',k', alpha=alpha )
-  ondePeriodico = np.nonzero( L<=0 )[0]
-  ondeCaotico = np.nonzero( L>0 )[0]
+  Ps = contadorPeriodo( X );
+  ondePeriodico = np.flatnonzero( Ps>0 )
+  ondeCaotico = np.flatnonzero( Ps==0 )
   axs[0].plot( As[ondePeriodico], X[:,ondePeriodico].T, ',', c=corX, alpha=1 )
   axs[0].plot( As[ondeCaotico], X[:,ondeCaotico].T, ',', c=corX, alpha=alpha )
 
